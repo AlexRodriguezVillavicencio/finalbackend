@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+
+
+<!-- Product section-->
+<section class="container" style="padding-top: 120px; padding-bottom: 50px;" >
+    
+    <div style="display: flex; flex-flow: row wrap; justify-content: space-around;">
+        <div class="card-product">
+            <img src={{producto.imagen.url}} style="height: 300px;">
+            <h4>{{producto.nombre}}</h4>
+        </div>
+
+        <div>
+            <div class="card-text">
+                <h4>DESCRIPCIÓN</h4>
+                <P>{{producto.descripcion}}</P>
+                
+                <br>
+                <h4>OBSERVACIONES DEL PRODUCTO</h4>
+                <input type="text" style="width: 400px;">
+                <br>
+                <br>
+              
+                <div>
+                    <button>-</button>
+                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 5rem" />
+                    <button>+</button>
+                </div>          
+                <br>    
+                <h3>s/. {{producto.precio}}</h3>
+                
+                
+                <p>Stock: {{ producto.stock }}</p>
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.cantidad }}
+                        {{ form.bebida }}
+                        {{ form.postre }}
+                        
+                    </form>
+                    <div class="d-flex">
+                        <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
+                        <a class="btn btn-primary" href="{% url 'tienda:agregarCarrito' producto.id %}" role="button">Agregar Carrito</a>
+                    </div>
+                    
+            </div>        
+   
+        </div>
+
+    </div>
+</section>
+{% endblock %}

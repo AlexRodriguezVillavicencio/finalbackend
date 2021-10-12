@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    {% load static %}
+    <head>
+        <meta charset="UTF-8"/>
+        <title> Don Restaurante </title>
+        <meta name="description" content="Los mejores platos al mejor precio"/>
+        <link rel="stylesheet" href="{%static 'apprestaurante/css/bootstrap-v3.3.5.css' %}">
+        <link rel="stylesheet" href="{%static 'apprestaurante/css/navbar.css' %}">
+        <link rel="stylesheet" href="{%static 'apprestaurante/css/footer.css' %}">
+        <link rel="stylesheet" href="{%static 'apprestaurante/css/main.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="icon" type="image/x-icon" href="{%static 'apprestaurante/img/favicon.ico.png' %}" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+          integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"/>
+</head>
+
+<body id="home" ng-app="Home">
+    <header class="clearfix">
+    <nav ng-controller="NavController">
+
+<!-- DESKTOP -->
+
+<div class="menu-container visible-lg visible-md clearfix" data-aw-nav >
+    <a href="{% url 'tienda:index' %}" class="logo-container">
+        <img class="logo-image" src="{%static 'apprestaurante/img/logo chef.png' %}">
+        <img class="logo-text" src="{%static 'apprestaurante/img/logotext.svg' %}">
+    </a>
+    <!-- .menu-items-container -->
+    <div class="menu-items-container clearfix">
+        <div class="total-menu-item-container" data-aw-nav-item="nuestroMenu">
+            <a class="menu-item first col-xs-12 col-sm-12 col-md-3 col-lg-3">Nuestro Menú</a>
+            <aw-sub-menu submenu="menu.categories.submenu" id="sm_categories">
+                <div id="msm" class="submenu-outer-container">
+                    <div class="submenu-inner-container">       
+                        <div class="myslick-container"> 
+                         
+                            <slick class="myslick" slides-to-show="4" slides-to-scroll="1" prev-arrow = ".slick-prev" next-arrow = ".slick-next" responsive="[{ breakpoint: 768, settings: { slidesToShow: 1 } }, { breakpoint: 991, settings: { slidesToShow: 2 } }]">
+                                {% if categorias %}
+                                {% for categoria in categorias %}
+                                <div>
+                                    <a href="{{categoria.get_absolute_url }}" class="ms-item-container">
+                                        <div class="item-menu-card" >
+                                            <img class="ms-item-image"  src="{{categoria.imagen.url}}">
+                                            <span class="ms-item-name" >{{categoria.nombre}}</span>
+                                        </div>        
+                                    </a>
+                                </div>
+                                {% endfor %}
+                                {% else %}
+                                <div>
+                                        <div class="item-menu-card" >
+                                            <span class="ms-item-name"  ></span>
+                                        </div>        
+                                </div>
+                                <div>
+                                        <div class="item-menu-card" >
+                                            <hr>
+                                            <hr>
+                                            <hr>
+                                            <span class="ms-item-name"  >sin categoria</span>
+                                        </div>        
+                                </div>
+                                {% endif %}
+                            </slick>
+                        </div>
+                             
+                    <div class="arrow slick-prev "></div>
+                    <div class="arrow slick-next "></div>
+                </div>
+            </div>
+            </aw-sub-menu>  
+            
+        </div>
+        <div class="total-menu-item-container">
+            <a href="#" class="menu-item col-xs-12 col-sm-12 col-md-3 col-lg-3">Promociones</a>
+        </div>
+        
+        <button  type="button" class="btn btn-warning " data-toggle="modal" data-target="#ModalDelivery" style="margin-top: 10px;">
+                Elige tu lugar de entrega
+        </button>   
+
+        <a href="{% url 'tienda:carrito' %}" class="site-cart">
+            <span><i class="fas fa-shopping-cart"></i></span>
+            
+        </a>
+<!-- sdsdsdddddddddddddddddd -->
+<!-- sdsdsdddddddddddddddddd -->
+<!-- sdsdsdddddddddddddddddd -->
+
+<!-- sdsdsdddddddddddddddddd -->
+<!-- sdsdsdddddddddddddddddd -->
+<!-- sdsdsdddddddddddddddddd -->
+    </div>
+</div>
+ <!-- MOBILE -->
+
+    <!-- .menu-container / directive : aw-main-menu -->
+    <div class="menu-container visible-xs visible-sm" >
+        <a href="/" class="logo-container">
+            <img class="logo-image" src="{%static 'apprestaurante/img/favicon.ico.png' %}">
+        </a>
+
+        <i class="nav-collapse-button" ng-click="navIsCollapsed = !navIsCollapsed">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAKElEQVRIiWNgGAXDHjAisf/TwmwmKhs6CgYhGE1Fo4ByMJqKRsEQAADWCQMKYvEFtQAAAABJRU5ErkJggg=="/>
+        </i>
+        
+        <div class="main-collapse" collapse="navIsCollapsed">
+            <!-- .menu-items-container -->
+            <div class="menu-items-container clearfix">
+                <div class="total-menu-item-container">
+                    <a href="#" class="menu-item first col-xs-12 col-sm-12 col-md-3 col-lg-3" >Nuestro Menú</a>
+                </div>
+
+                <div class="total-menu-item-container">
+                    <a href="#" class="menu-item col-xs-12 col-sm-12 col-md-3 col-lg-3">Promociones</a>
+                </div>
+
+				<div class="total-menu-item-container" data-toggle="modal" data-target="#ModalDelivery">
+                    <a href="#" class="menu-item col-xs-12 col-sm-12 col-md-3 col-lg-3" >Recogelo aquí o por Delivery</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+<!-- /.menu-container -->
+<div class="top-bar"></div>
+</nav>
+ <!-- Modal -->
+ <div class="modal fade" id="ModalDelivery" tabindex="-1" role="dialog" aria-labelledby="ModalDeliveryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ModaDeliverylLabel">CONFIRMA TU DIRECCIÓN DE ENTREGA</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="font-size: 50px; margin-top: -35px;">
+            <span aria-hidden="true" >&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- aqui hay un ejemplo -->
+          <!-- aqui hay un ejemplo -->
+            <button class="card-modal-nav">
+                <h3>Angamos</h3> 
+                <p>Av. Angamos Nº 123 Urb. Mirador
+                <br>SOLO RECOJO EN cart</p> 
+                <span>20 min aprox.</span>
+            </button>
+            <button class="card-modal-nav">
+                <h3>Angamos</h3> 
+                <p>Av. Angamos Nº 123 Urb. Mirador
+                <br>SOLO RECOJO EN cart</p> 
+                <span>20 min aprox.</span>
+            </button>
+            <button class="card-modal-nav">
+                <h3>Angamos</h3> 
+                <p>Av. Angamos Nº 123 Urb. Mirador
+                <br>SOLO RECOJO EN cart</p> 
+                <span>20 min aprox.</span>
+            </button>
+          <!-- aqui hay un ejemplo -->
+          <!-- aqui hay un ejemplo -->
+          <!-- aqui hay un ejemplo -->
+          <!-- aqui hay un ejemplo -->
+          <!-- aqui hay un ejemplo -->
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-info">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<br>
+<br>
+{% block content %}
+{% endblock %}
+<br>
+<br>
+<br>
+<br>
+
+
+<footer>                      
+    <div class="footer-container" ng-controller="FooterCtrl">
+    <div class="footer-top-content clearfix">
+        <div class="menu-footer-container">
+            <div class="menu-footer-item ">
+                
+                    <a >
+                        CONTACTO
+                    </a>
+                
+            </div>
+            <div class="menu-footer-item ">
+                <a href="#">REGISTRO</a>
+            </div>
+            <div class="menu-footer-item ">
+                <a href="#">LOGIN</a>
+            </div>
+            <div class="menu-footer-item ">
+                <a href="#">LOGOUT</a>
+            </div>
+        </div>
+
+        <div class="social-footer-container">
+            <div class="social-footer-item">
+                <a href="#" target="_blank">
+                    <img class="twitter-image social-image" src="https://d25dk4h1q4vl9b.cloudfront.net/bundles/front/media/images/footer/twitter.png" alt="Twitter">
+                </a>
+            </div>
+            <div class="social-footer-item">
+                <a href="#" target="_blank">
+                    <img class="youtube-image social-image" src="https://d25dk4h1q4vl9b.cloudfront.net/bundles/front/media/images/footer/youtube.png" alt="YouTube">
+                </a>
+            </div>
+            <div class="social-footer-item">
+                <a href="#" target="_blank">
+                    <img class="instagram-image social-image" src="https://d25dk4h1q4vl9b.cloudfront.net/bundles/front/media/images/footer/instagram.png" alt="Instagram">
+                </a>
+            </div>
+            <div class="social-footer-item">
+                <a href="#" target="_blank">
+                    <img class="facebook-image social-image" src="https://d25dk4h1q4vl9b.cloudfront.net/bundles/front/media/images/footer/facebook.png" alt="Facebook">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-legals" >
+        <div class="footer-legals-inner-container clearfix">
+            <div class="footer-legals-item-container">
+                <div class="footer-legals-item first">
+                    <a href="#" >Política de Privacidad</a>
+                </div>
+                <div class="footer-legals-item">
+                    <a href="#" >Aviso de fraude</a>
+                </div>
+                <div class="footer-legals-item">
+                    <a href="#" >Términos y Condiciones</a>
+                </div>
+                <div class="footer-legals-item">
+                    <a href="#">Libro Reclamaciones</a>
+                </div>
+            </div>
+            <div class="footer-legals-rights">
+                <b>PLANTILLA CREADA POR ALEX RODRIGUEZ </b>
+            </div>
+        </div>
+    </div>
+</footer>
+                
+                
+<script src="https://d25dk4h1q4vl9b.cloudfront.net/js/16c8cd8.js"></script>
+
+<script>
+var MYAPP = MYAPP || {};
+MYAPP.namespace('MYAPP.nav');
+MYAPP.namespace('MYAPP.app');
+MYAPP.app = {
+    basePath: "https://www.restaurante.pe:443/",    
+    asset_url: ""};
+window.country = ("PERU");
+window.language = ("es");
+window.locale = ("es_PE");
+</script>                                        
+
+<script src="https://d25dk4h1q4vl9b.cloudfront.net/js/ec32d3e.js"></script>
+<script src="https://d25dk4h1q4vl9b.cloudfront.net/js/0e32a29.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</body>
+</html>

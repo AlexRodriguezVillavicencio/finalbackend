@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block content %}
+<section class="flayer-principal">
+    <div>
+        <img src="{%static 'apprestaurante/img/principalflayer.jpg' %}" alt="">
+    </div>
+</section>
+<section class="container" style="padding-top: 20px; padding-bottom: 50px;" >
+    <div>
+        <h3 style="text-align: center; padding-bottom: 50px; text-transform:uppercase; font-weight: 700; color: coral;">nuestros platos</h3>
+    </div>  
+
+    <div style="display: flex; flex-flow: row wrap; justify-content: space-around;">
+    {% for producto in lstProductos %}
+        <div class="card-product" style="width: 500px; margin-bottom: 30px;">
+            <a href="{{producto.get_absolute_url}}" class="ms-item-container">
+                <!-- Product image-->
+                <img class="card-img-top" src="{{ producto.imagen.url }}" alt="..."  style="max-width: 500px; height:300px;" />
+                <!-- Product details-->
+                <h5 class="fw-bolder">{{ producto.nombre }}</h5>
+                <p>S/. {{producto.precio}}</p> 
+            </a>                 
+            
+        </div>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container" style="margin-top:100px;">
+    <!-- Shopping cart table -->
+    <div class="card">
+        <div class="card-header" style="width: 100%; text-align: center;">
+            <h2 style="font-weight: 600; color: coral;">CARRITO DE COMPRAS</h2>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive"  >
+              <table class="table table-bordered m-0">
+                <thead style=" background-color: rgb(236, 182, 162);">
+                  <tr>
+                    <!-- Set columns width -->
+                    <th class="text-center py-3 px-4" style="min-width: 300px;">Imagen</th>
+                    <th class="text-center py-3 px-4" style="min-width: 300px;">Producto</th>
+                    <th class="text-center py-3 px-4" style="width: 100px;">Cantidad</th>
+                    <th class="text-center py-3 px-4" style="width: 120px;">Precio</th>
+                    <th class="text-center py-3 px-4" style="width: 100px;">Total</th>
+                    <th class="text-center align-middle py-3 px-0" style="width: 40px;">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for key,value in request.session.cart.items %}
+                  <tr>
+                    <td class="p-4">
+                      <div style="text-align: center;">
+                        <img src="{{ value.imagen }}" style="width: 150px;">
+                        <div class="media-body">
+                          <a href="{% url 'tienda:producto' value.producto_id %}" class="d-block text-dark"></a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center font-weight-semibold align-middle p-4"> 
+                        {{ value.nombre }}
+    
+                    </td>
+                    <td>
+                      <div class="input-group mb-3" style="max-width: 120px;">
+                          <div class="input-group-pretend">
+                              <!-- <a href="#" class="btn btn-outline-primary">
+                                  &minus;
+                              </a> -->
+                          </div>
+                          <input type="text" class="form-control text-center"
+                          value="{{ value.cantidad }}"
+                          >
+                          <div class="input-group-append">
+                              <!-- <a href="#" class="btn btn-outline-primary">
+                                  &plus;
+                              </a> -->
+                          </div>
+                      </div>
+                  </td>
+                   
+                    <td class="text-right font-weight-semibold align-middle p-4">s/. {{ value.precio }}</td>
+                    <td class="text-right font-weight-semibold align-middle p-4">s/. {{ value.total }}</td>
+                    <td>
+                      <a href="{% url 'tienda:eliminarProductoCarrito' value.producto_id %}" class="btn btn-primary btn-sm">x</a>
+                    </td>
+                  
+                  </tr>
+                  {% empty %}
+                            <tr>
+                                <td colspan="6">
+                                    No hay productos en el carrito aún. <a href="{% url 'tienda:index' %}">Seguir comprando</a>
+                                </td>
+                            </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+                
+            <!-- / Shopping cart table -->     
+            <div class="float-right">
+              <a class="btn btn-info" href="{% url 'tienda:index' %}" role="button">REGRESAR</a>
+              <a class="btn btn-danger" href="{% url 'tienda:limpiarCarrito' %}" role="button">LIMPIAR</a>
+               
+            </div>
+          </div>
+      </div>
+
+</div>
+
+<div style="padding-right: 100px; ">
+    
+              <div class="row" >
+                  <div class="col-md-6">
+                      <div class="row mb-5">
+                          <div class="col-md-12">
+                              
+                          </div>
+                      </div>
+                  </div>
+  
+                  <div class="col-md-6 pl-5" style="border:1px solid rgb(223, 217, 217); padding-bottom:10px ">
+                      <div class="row justify-content-end">
+                          <div class="col-md-12">
+                              <div class="row">
+                                  <div class="col-md-12 text-right border-bottom mb-5">
+                                      <h3 class="text-black h4 text-uppercase text-center">Cuenta</h3>
+                                  </div>
+                              </div>
+  
+                              <div class="row mb-3" style="padding:20px">
+                                  <div class="col-md-6">
+                                      <span class="text-black">Subtotal</span>
+                                  </div>
+  
+                                  <div class="col-md-6 text-right">
+                                      <strong class="text-black">${{ order.get_subtotal }}</strong>
+                                  </div>
+                              </div>
+  
+                              <div class="row mb-5" style="padding:20px">
+                                  <div class="col-md-6">
+                                      <span class="text-black">Total</span>
+                                  </div>
+  
+                                  <div class="col-md-6 text-right">
+                                      <strong class="text-black">${{ order.get_total }}</strong>
+                                  </div>
+                              </div>
+  
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <a href="#" class="btn btn-warning btn-lg py-3 btn-block">Pagar</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          
+  
+  </div>
+
+
+{% endblock %}
